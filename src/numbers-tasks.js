@@ -106,10 +106,10 @@ function getLinearEquationRoot(a, b) {
  *   (0,1) (0,1)     => 0
  */
 function getAngleBetweenVectors(x1, y1, x2, y2) {
-  return (
-    (x1 * y1 + x2 * y2) /
-    (getDistanceBetweenPoints(0, 0, x1, y1) *
-      getDistanceBetweenPoints(0, 0, x2, y2))
+  return Math.acos(
+    (x1 * x2 + y1 * y2) /
+      (getDistanceBetweenPoints(0, 0, x1, y1) *
+        getDistanceBetweenPoints(0, 0, x2, y2))
   );
 }
 
@@ -317,7 +317,15 @@ function getSumOfDigits(num) {
  *   15  => false
  */
 function isPowerOfTwo(num) {
-  return Number.isInteger(Math.sqrt(num));
+  const binary = num.toString(2);
+  let zeroed = true;
+  for (let i = 1; i < binary.length; i += 1) {
+    if (binary[i] === '1') {
+      zeroed = false;
+      break;
+    }
+  }
+  return binary[0] === '1' && zeroed;
 }
 
 /**
@@ -457,7 +465,7 @@ function isInteger(number) {
  * 'abcdefgh'      => NaN
  */
 function getFloatOnString(str) {
-  return parseFloat(str);
+  return Number.parseFloat(str);
 }
 
 /**
@@ -475,7 +483,7 @@ function getFloatOnString(str) {
  * '10', 8              => 8
  */
 function getIntegerOnString(str, base) {
-  Number.parseInt(str.matchAll(/\d/g), base);
+  return Number.parseInt(str, base);
 }
 
 /**
@@ -490,7 +498,7 @@ function getIntegerOnString(str, base) {
  * 2 ** 53  => false
  */
 function isSafeInteger(number) {
-  Number.isSafeInteger(number);
+  return Number.isSafeInteger(number);
 }
 
 /**
@@ -504,7 +512,7 @@ function isSafeInteger(number) {
  * -5.1 => -6
  */
 function roundToSmallestInteger(number) {
-  Math.floor(number);
+  return Math.floor(number);
 }
 
 /**
@@ -564,7 +572,7 @@ function getIntegerPartNumber(number) {
  * 0.1, 0.2, 0.3 => 0.6
  */
 function getSumOfNumbers(x1, x2, x3) {
-  return x1 + x2 + x3;
+  return (x1 + x2 + x3).toFixed(8);
 }
 
 /**
@@ -627,10 +635,7 @@ function getHypotenuse(a, b) {
  * 15 => 8
  */
 function getCountOfOddNumbers(number) {
-  if (number <= 0) {
-    return 0;
-  }
-  return Math.floor(number / 2) + (number % 2);
+  return Math.trunc(Math.abs(number) / 2) + (Math.abs(number) % 2);
 }
 
 module.exports = {
